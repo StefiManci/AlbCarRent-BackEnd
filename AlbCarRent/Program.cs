@@ -1,9 +1,12 @@
 using AlbCarRent.Datalayer;
+using AlbCarRent.Modules.AuthModule.Application.Interfaces;
+using AlbCarRent.Modules.AuthModule.Application.Services;
+using AlbCarRent.Modules.AuthModule.Domain;
+using AlbCarRent.Modules.AuthModule.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,11 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Adding Services
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 //Configure EF COre with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -49,8 +57,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
     };
 });
-
-
 
 var app = builder.Build();
 
