@@ -1,4 +1,8 @@
 using AlbCarRent.Datalayer;
+using AlbCarRent.Modules.AdminModule.Application.Interfaces;
+using AlbCarRent.Modules.AdminModule.Application.Services;
+using AlbCarRent.Modules.AdminModule.Domain;
+using AlbCarRent.Modules.AdminModule.Infrastructure;
 using AlbCarRent.Modules.AuthModule.Application.Interfaces;
 using AlbCarRent.Modules.AuthModule.Application.Services;
 using AlbCarRent.Modules.AuthModule.Domain;
@@ -20,6 +24,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 
 //Configure EF COre with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
