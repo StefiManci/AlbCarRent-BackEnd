@@ -1,5 +1,6 @@
 ﻿using AlbCarRent.Modules.BusinessModule.Application.Interfaces;
 using AlbCarRent.Modules.BusinessModule.Domain;
+using AlbCarRent.Modules.BusinessModule.DTOs;
 
 namespace AlbCarRent.Modules.BusinessModule.Application.Services
 {
@@ -10,6 +11,11 @@ namespace AlbCarRent.Modules.BusinessModule.Application.Services
         public BusinessService(IBusinessRepository businessRepository)
         {
             _businessRepository = businessRepository;
+        }
+
+        public async Task<AddCarResponse> AddCar(AddCarRequest request)
+        {
+            return await _businessRepository.AddCar(request);
         }
     }
 }
