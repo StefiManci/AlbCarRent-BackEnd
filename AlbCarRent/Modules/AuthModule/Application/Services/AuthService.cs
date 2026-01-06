@@ -89,7 +89,8 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
                 {
                     Success = true,
                     Message = "Login successful.",
-                    Token = token
+                    Token = token,
+                    Id = user.Id
                 };
 
             }

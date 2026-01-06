@@ -1,6 +1,7 @@
 ﻿using AlbCarRent.Datalayer;
 using AlbCarRent.Modules.BusinessModule.Domain;
 using AlbCarRent.Modules.BusinessModule.DTOs;
+using Microsoft.EntityFrameworkCore;
 
 namespace AlbCarRent.Modules.BusinessModule.Infrastructure
 {
@@ -50,6 +51,40 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
                 {
                     Success = false,
                     Message = "Failed to add car!",
+                };
+            }
+        }
+
+        public async Task<GetAllCarsResponse> GetAllCars(string owmerId)
+        {
+            try
+            {
+                var cars = await _dbContext.Cars.Where(c=>c.OwnedBy == owmerId).ToListAsync();
+
+                if (cars.Any())
+                {
+                    return new GetAllCarsResponse
+                    {
+                        Success = true,
+                        Message = "Cars Returned Successfully!",
+                        Cars = cars
+                    };
+                }
+
+
+                return new GetAllCarsResponse
+                {
+                    Success = true,
+                    Message = "There are no registered cars for this owner!",
+                };
+
+            }
+            catch(Exception ex)
+            {
+                return new GetAllCarsResponse
+                {
+                    Success = false,
+                    Message = "Unexpected Error Occured!"
                 };
             }
         }

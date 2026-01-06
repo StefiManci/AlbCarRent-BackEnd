@@ -17,5 +17,10 @@ namespace AlbCarRent.Modules.BusinessModule.Application.Services
         {
             return await _businessRepository.AddCar(request);
         }
+
+        public async Task<GetAllCarsResponse> GetAllCars(string ownerId)
+        {
+            return await _businessRepository.GetAllCars(ownerId);
+        }
     }
 }
