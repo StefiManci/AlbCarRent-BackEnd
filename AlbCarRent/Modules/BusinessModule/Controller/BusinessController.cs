@@ -63,5 +63,46 @@ namespace AlbCarRent.Modules.BusinessModule.Controller
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("get-car/{carId}")]
+        public async Task<IActionResult> GetCarById(int carId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await _businessService.GetCarById(carId);
+
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpPost("update-car")]
+        public async Task<IActionResult> EditCar([FromBody] UpdateCarDto car)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await _businessService.EditCar(car);
+
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+
+        }
     }
 }

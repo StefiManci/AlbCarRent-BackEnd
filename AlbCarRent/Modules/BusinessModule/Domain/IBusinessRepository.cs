@@ -7,5 +7,9 @@ namespace AlbCarRent.Modules.BusinessModule.Domain
         Task<AddCarResponse> AddCar(AddCarRequest request);
 
         Task<GetAllCarsResponse> GetAllCars(string ownerId);
+
+        Task<GetCarByIdResponse> GetCarById(int carId);
+
+        Task<EditCarResponse> EditCar(UpdateCarDto car);
     }
 }

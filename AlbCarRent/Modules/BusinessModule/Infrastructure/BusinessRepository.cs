@@ -55,11 +55,11 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
             }
         }
 
-        public async Task<GetAllCarsResponse> GetAllCars(string owmerId)
+        public async Task<GetAllCarsResponse> GetAllCars(string ownerId)
         {
             try
             {
-                var cars = await _dbContext.Cars.Where(c=>c.OwnedBy == owmerId).ToListAsync();
+                var cars = await _dbContext.Cars.Where(c=>c.OwnedBy == ownerId).ToListAsync();
 
                 if (cars.Any())
                 {
@@ -85,6 +85,113 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
                 {
                     Success = false,
                     Message = "Unexpected Error Occured!"
+                };
+            }
+        }
+
+        public async Task<GetCarByIdResponse> GetCarById(int carId)
+        {
+            try
+            {
+                var car = await _dbContext.Cars.FirstOrDefaultAsync(c=>c.Id == carId);
+
+                if (car != null)
+                {
+                    return new GetCarByIdResponse
+                    {
+                        Success = true,
+                        Message = "Car Returned Successfully",
+                        Car = car
+                    };
+                }
+
+                return new GetCarByIdResponse
+                {
+                    Success = false,
+                    Message = "The car with the provided id was not found!",
+                };
+
+            }
+            catch (Exception ex)
+            {
+                return new GetCarByIdResponse
+                {
+                    Success = false,
+                    Message = "Unexpected Error Occured! " +ex.Message,
+                };
+            }
+        }
+
+        public async Task<EditCarResponse> EditCar(UpdateCarDto car)
+        {
+            try
+            {
+                var existingCar = await _dbContext.Cars.FirstOrDefaultAsync(c=>c.Id==car.Id);
+
+                if(existingCar != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(car.Make) && existingCar.Make != car.Make)
+                        existingCar.Make = car.Make;
+
+                    if (!string.IsNullOrWhiteSpace(car.Model) && existingCar.Model != car.Model)
+                        existingCar.Model = car.Model;
+
+                    if (!string.IsNullOrWhiteSpace(car.Color) && existingCar.Color != car.Color)
+                        existingCar.Color = car.Color;
+
+                    if (!string.IsNullOrWhiteSpace(car.LicensePlate) && existingCar.LicensePlate != car.LicensePlate)
+                        existingCar.LicensePlate = car.LicensePlate;
+
+                    if (!string.IsNullOrWhiteSpace(car.Description) && existingCar.Description != car.Description)
+                        existingCar.Description = car.Description;
+
+                    if (!string.IsNullOrWhiteSpace(car.Transmission) && existingCar.Transmission != car.Transmission)
+                        existingCar.Transmission = car.Transmission;
+
+                    if (!string.IsNullOrWhiteSpace(car.FuelType) && existingCar.FuelType != car.FuelType)
+                        existingCar.FuelType = car.FuelType;
+
+                    if (!string.IsNullOrWhiteSpace(car.OwnedBy) && existingCar.OwnedBy != car.OwnedBy)
+                        existingCar.OwnedBy = car.OwnedBy;
+
+                    if (!string.IsNullOrWhiteSpace(car.RentedBy) && existingCar.RentedBy != car.RentedBy)
+                        existingCar.RentedBy = car.RentedBy;
+
+                    if (car.Year > 0 && existingCar.Year != car.Year)
+                        existingCar.Year = car.Year;
+
+                    if (car.Mileage >= 0 && existingCar.Mileage != car.Mileage)
+                        existingCar.Mileage = car.Mileage;
+
+                    if (car.DailyRentalPrice > 0 && existingCar.DailyRentalPrice != car.DailyRentalPrice)
+                        existingCar.DailyRentalPrice = car.DailyRentalPrice;
+
+                    if (existingCar.IsAvailable != car.IsAvailable)
+                        existingCar.IsAvailable = car.IsAvailable;
+
+                    existingCar.UpdatedAt = DateTime.UtcNow;
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new EditCarResponse
+                    {
+                        Success = true,
+                        Message = "Car Edited Successfully!"
+                    };
+                }
+
+                return new EditCarResponse
+                {
+                    Success = false,
+                    Message = "Car with the provided Id was not found!"
+                };
+            }
+            catch (Exception ex)
+            {
+                return new EditCarResponse
+                {
+                    Success = false,
+                    Message = "Database Error Occured! " + ex.Message,
                 };
             }
         }
