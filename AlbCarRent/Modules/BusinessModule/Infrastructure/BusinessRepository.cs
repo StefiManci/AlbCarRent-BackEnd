@@ -195,5 +195,42 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
                 };
             }
         }
+
+        public async Task<DeleteCarResponse> DeleteCar(int carId)
+        {
+            try
+            {
+
+                var existingCar = await _dbContext.Cars.FirstOrDefaultAsync(c=>c.Id == carId);
+
+                if (existingCar != null)
+                {
+                    _dbContext.Cars.Remove(existingCar);
+
+                    await _dbContext.SaveChangesAsync();
+
+                    return new DeleteCarResponse
+                    {
+                        Success = true,
+                        Message = "Car Deleted Successfully",
+                    };
+                }
+
+                return new DeleteCarResponse
+                {
+                    Success = false,
+                    Message = "Car with given Id : " + carId + " was not found",
+                };
+
+            }
+            catch(Exception ex)
+            {
+                return new DeleteCarResponse
+                {
+                    Success = false,
+                    Message = "Database Error Occured : " + ex.Message
+                };
+            }
+        }
     }
 }

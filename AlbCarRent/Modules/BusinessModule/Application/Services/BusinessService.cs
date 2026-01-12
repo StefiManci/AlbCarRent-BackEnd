@@ -33,5 +33,11 @@ namespace AlbCarRent.Modules.BusinessModule.Application.Services
         {
             return await _businessRepository.EditCar(car);
         }
+
+        public async Task<DeleteCarResponse> DeleteCar(int carId)
+        {
+            return await _businessRepository.DeleteCar(carId);
+        }
+
     }
 }

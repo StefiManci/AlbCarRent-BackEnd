@@ -104,5 +104,26 @@ namespace AlbCarRent.Modules.BusinessModule.Controller
             }
 
         }
+
+        [HttpDelete("delete-car/{carId}")]
+        public async Task<IActionResult> DeleteCar(int carId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var response = await _businessService.DeleteCar(carId);
+
+                return Ok(response);
+
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
