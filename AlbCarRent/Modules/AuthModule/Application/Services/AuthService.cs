@@ -28,28 +28,39 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
         public string GenerateToken(string userId, string userEmail, string[] roles)
         {
             var jwtSettings = _configuration.GetSection("JwtSettings");
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
+
+            var key = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtSettings["SecretKey"])
+            );
+
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var claims = new List<Claim>
-            {
-              new Claim(JwtRegisteredClaimNames.Sub, userId),
-              new Claim(JwtRegisteredClaimNames.Email, userEmail),
-              new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-            };
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, userId),
+        new Claim(ClaimTypes.NameIdentifier, userId),
+        new Claim(ClaimTypes.Email, userEmail),
+        new Claim(ClaimTypes.Name, userEmail),
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+    };
 
-            claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+            claims.AddRange(
+                roles.Select(role => new Claim(ClaimTypes.Role, role))
+            );
 
             var token = new JwtSecurityToken(
                 issuer: jwtSettings["Issuer"],
                 audience: jwtSettings["Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(Convert.ToDouble(jwtSettings["ExpiryMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(
+                    Convert.ToDouble(jwtSettings["ExpiryMinutes"])
+                ),
                 signingCredentials: creds
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
+
 
         public async Task<LoginResponse> Login(LoginRequest request)
         {
@@ -138,7 +149,7 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
                     };
                 }
 
-                const string defaultRole = "client";
+                const string defaultRole = "Client";
 
                 if (!await _roleManager.RoleExistsAsync(defaultRole))
                 {

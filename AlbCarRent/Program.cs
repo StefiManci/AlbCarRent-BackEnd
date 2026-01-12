@@ -70,6 +70,12 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Client", policy =>
+       policy.RequireRole("Client"));
+});
+
 // Define CORS policy
 builder.Services.AddCors(options =>
 {

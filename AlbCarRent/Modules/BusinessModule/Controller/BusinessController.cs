@@ -1,11 +1,13 @@
 ﻿using AlbCarRent.Modules.BusinessModule.Application.Interfaces;
 using AlbCarRent.Modules.BusinessModule.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace AlbCarRent.Modules.BusinessModule.Controller
 {
+    [Authorize(Roles = "client")]
     [Route("api/[controller]")]
     [ApiController]
     public class BusinessController : ControllerBase
