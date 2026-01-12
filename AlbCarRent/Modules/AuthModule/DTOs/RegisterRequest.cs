@@ -15,5 +15,9 @@ namespace AlbCarRent.Modules.AuthModule.DTOs
 
         [Required(ErrorMessage = "Email is required!")]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Account type is required!")]
+        
+        public bool IsBussinessAccount { get; set; }
     }
 }

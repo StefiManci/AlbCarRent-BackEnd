@@ -7,7 +7,7 @@ using System.Net;
 
 namespace AlbCarRent.Modules.BusinessModule.Controller
 {
-    [Authorize(Roles = "client")]
+    [Authorize(Roles = "Bussiness")]
     [Route("api/[controller]")]
     [ApiController]
     public class BusinessController : ControllerBase

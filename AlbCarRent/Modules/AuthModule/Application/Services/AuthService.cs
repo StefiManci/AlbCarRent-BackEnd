@@ -101,7 +101,8 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
                     Success = true,
                     Message = "Login successful.",
                     Token = token,
-                    Id = user.Id
+                    Id = user.Id,
+                    Role = roles.First()
                 };
 
             }
@@ -149,14 +150,23 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
                     };
                 }
 
-                const string defaultRole = "Client";
+                string role = "";
 
-                if (!await _roleManager.RoleExistsAsync(defaultRole))
+                if (request.IsBussinessAccount)
                 {
-                    await _roleManager.CreateAsync(new IdentityRole(defaultRole));
+                    role = "Bussiness";
+                }
+                else
+                {
+                    role = "Client";
                 }
 
-                await _userManager.AddToRoleAsync(newUser, defaultRole);
+                if (!await _roleManager.RoleExistsAsync(role))
+                {
+                    await _roleManager.CreateAsync(new IdentityRole(role));
+                }
+
+                await _userManager.AddToRoleAsync(newUser, role);
 
                 var roles = await _userManager.GetRolesAsync(newUser);
 
@@ -172,7 +182,9 @@ namespace AlbCarRent.Modules.AuthModule.Application.Services
                 {
                     Success = true,
                     Message = "User was created successfully.",
-                    Token = token
+                    Token = token,
+                    Id = newUser.Id,
+                    Role = role
                 };
 
 

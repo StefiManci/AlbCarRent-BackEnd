@@ -74,6 +74,9 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Client", policy =>
        policy.RequireRole("Client"));
+
+    options.AddPolicy("Bussiness", policy =>
+      policy.RequireRole("Bussiness"));
 });
 
 // Define CORS policy
