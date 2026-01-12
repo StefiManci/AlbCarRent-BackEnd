@@ -11,6 +11,10 @@ using AlbCarRent.Modules.BusinessModule.Application.Interfaces;
 using AlbCarRent.Modules.BusinessModule.Application.Services;
 using AlbCarRent.Modules.BusinessModule.Domain;
 using AlbCarRent.Modules.BusinessModule.Infrastructure;
+using AlbCarRent.Modules.CustomerModule.Application.Interfaces;
+using AlbCarRent.Modules.CustomerModule.Application.Services;
+using AlbCarRent.Modules.CustomerModule.Domain;
+using AlbCarRent.Modules.CustomerModule.Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +36,8 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IBusinessRepository,BusinessRepository>();
 builder.Services.AddScoped<IBusinessService,BusinessService>();
+builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 //Configure EF COre with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
