@@ -232,5 +232,22 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
                 };
             }
         }
+
+        public async Task<GetTrendingCarsResponse> GetTrendingCars(int page, int pageSize)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }catch (Exception ex)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public async Task<GetCarsResponse> GetCars(int page, int pageSize , string search ,int lowPrice,int highPrice,string fuelType)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }

@@ -12,5 +12,8 @@ namespace AlbCarRent.Modules.BusinessModule.Domain
 
         Task<EditCarResponse> EditCar(UpdateCarDto car);
         Task<DeleteCarResponse> DeleteCar(int carId);
+        Task<GetTrendingCarsResponse> GetTrendingCars(int page, int pageSize);
+
+        Task<GetCarsResponse> GetCars(int page, int pageSize, string search, int lowPrice, int highPrice, string fuelType);
     }
 }
