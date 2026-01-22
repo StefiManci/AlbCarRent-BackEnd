@@ -1,4 +1,4 @@
-﻿namespace AlbCarRent.Modules.BusinessModule.DTOs
+﻿namespace AlbCarRent.Modules.CarModule.DTOs
 {
     public class GetTrendingCarsResponse
     {

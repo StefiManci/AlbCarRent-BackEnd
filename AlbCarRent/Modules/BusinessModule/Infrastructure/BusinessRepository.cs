@@ -1,6 +1,7 @@
 ﻿using AlbCarRent.Datalayer;
 using AlbCarRent.Modules.BusinessModule.Domain;
 using AlbCarRent.Modules.BusinessModule.DTOs;
+using AlbCarRent.Modules.CarModule.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace AlbCarRent.Modules.BusinessModule.Infrastructure
@@ -232,22 +233,5 @@ namespace AlbCarRent.Modules.BusinessModule.Infrastructure
                 };
             }
         }
-
-        public async Task<GetTrendingCarsResponse> GetTrendingCars(int page, int pageSize)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }catch (Exception ex)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public async Task<GetCarsResponse> GetCars(int page, int pageSize , string search ,int lowPrice,int highPrice,string fuelType)
-        {
-            throw new NotImplementedException();
-        }
-
     }
 }
