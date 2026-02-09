@@ -1,5 +1,6 @@
 ﻿using AlbCarRent.Modules.BusinessModule.DTOs;
 using AlbCarRent.Modules.BusinessModule.DTOs.Car_Rating_DTOs;
+using AlbCarRent.Modules.UploadModule.DTOs;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,8 @@ namespace AlbCarRent.Datalayer
         public DbSet<Car> Cars { get; set; }
 
         public DbSet<CarRating> CarRatings { get; set; }
+
+        public DbSet<CarImage> CarImages { get; set; }
 
     }
 
