@@ -68,5 +68,36 @@ namespace AlbCarRent.Modules.CarModule.Infrastructure
                 };
             }
         }
+
+        public async Task<GetCarImagesResponse> GetCarImages(int carId,string businessId)
+        {
+            try
+            {
+                var carImages = await _dbContext.CarImages.FirstOrDefaultAsync(c=>c.CarId == carId);
+
+                if(carImages!= null)
+                {
+                    return new GetCarImagesResponse
+                    {
+                        Success = true,
+                        Message = "Car Images Returned Successfully!",
+                        ImageUrls = carImages.ImageUrls
+                    };
+                }
+
+                return new GetCarImagesResponse
+                {
+                    Success = true,
+                    Message = "This car has no uploaded images!",
+                };
+            }catch (Exception ex)
+            {
+                return new GetCarImagesResponse
+                {
+                    Success = false,
+                    Message = "An unexpected error occurred!"
+                };
+            }
+        }
     }
 }

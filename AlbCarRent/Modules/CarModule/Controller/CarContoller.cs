@@ -35,5 +35,26 @@ namespace AlbCarRent.Modules.CarModule.Controller
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("images/car/{carId}/business/{businessId}")]
+        public async Task<IActionResult> GetCarImages(int carId,string businessId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Problem with the provided params");
+                }
+
+                var response = await _carService.GetCarImages(carId, businessId);
+
+                return Ok(response);
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

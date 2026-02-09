@@ -5,5 +5,7 @@ namespace AlbCarRent.Modules.CarModule.Application.Interfaces
     public interface ICarService
     {
         Task<GetCarsResponse> GetCars(GetCarsRequest request);
+
+        Task<GetCarImagesResponse> GetCarImages(int carId, string businessId);
     }
 }

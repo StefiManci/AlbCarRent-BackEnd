@@ -17,5 +17,10 @@ namespace AlbCarRent.Modules.CarModule.Application.Services
         {
             return await _carRepository.GetCars(request);
         }
+
+        public async Task<GetCarImagesResponse> GetCarImages(int carId, string businessId)
+        {
+            return await _carRepository.GetCarImages(carId, businessId);
+        }
     }
 }

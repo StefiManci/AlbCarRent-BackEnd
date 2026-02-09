@@ -5,5 +5,6 @@ namespace AlbCarRent.Modules.CarModule.Domain
     public interface ICarRepository
     {
         Task<GetCarsResponse> GetCars(GetCarsRequest request);
+        Task<GetCarImagesResponse> GetCarImages(int carId, string businessId);
     }
 }
