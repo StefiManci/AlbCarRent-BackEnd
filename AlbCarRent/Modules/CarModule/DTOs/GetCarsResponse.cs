@@ -6,9 +6,11 @@ namespace AlbCarRent.Modules.CarModule.DTOs
     {
         public bool Success { get; set; }
 
-        public List<Car> Cars { get; set; }
+        public List<CarDto> Cars { get; set; }
 
 
         public string Message { get; set; }
+
+        public string SingleCarImage { get; set; }
     }
 }

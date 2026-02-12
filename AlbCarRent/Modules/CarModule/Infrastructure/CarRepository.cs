@@ -52,11 +52,42 @@ namespace AlbCarRent.Modules.CarModule.Infrastructure
                     .Take(request.PageSize)
                     .ToListAsync();
 
+                var carList = new List<CarDto>();
+
+                foreach (var car in cars)
+                {
+                    var carImage = await GetCarImages(car.Id,car.OwnedBy);
+
+
+                    var singleCar = new CarDto
+                    {
+                        Id = car.Id,
+                        Make = car.Make,
+                        Model = car.Model,
+                        Year = car.Year,
+                        Color = car.Color,
+                        LicensePlate = car.LicensePlate,
+                        Description = car.Description,
+                        DailyRentalPrice = car.DailyRentalPrice,
+                        IsAvailable = car.IsAvailable,
+                        CreatedAt = car.CreatedAt,
+                        UpdatedAt = car.UpdatedAt,
+                        Transmission = car.Transmission,
+                        FuelType = car.FuelType,
+                        Mileage = car.Mileage,
+                        OwnedBy = car.OwnedBy,
+                        RentedBy = car.RentedBy,
+                        Image = carImage?.ImageUrls?[0] ?? ""
+                    };
+
+                    carList.Add(singleCar);
+                }
+
                 return new GetCarsResponse
                 {
                     Success = true,
                     Message = "Cars Returned Successfully!",
-                    Cars = cars
+                    Cars = carList
                 };
             }
             catch (Exception ex)
