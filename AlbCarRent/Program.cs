@@ -7,6 +7,10 @@ using AlbCarRent.Modules.AuthModule.Application.Interfaces;
 using AlbCarRent.Modules.AuthModule.Application.Services;
 using AlbCarRent.Modules.AuthModule.Domain;
 using AlbCarRent.Modules.AuthModule.Infrastructure;
+using AlbCarRent.Modules.Booking.Application.Interfaces;
+using AlbCarRent.Modules.Booking.Application.Services;
+using AlbCarRent.Modules.Booking.Domain;
+using AlbCarRent.Modules.Booking.Infrastructure;
 using AlbCarRent.Modules.BusinessModule.Application.Interfaces;
 using AlbCarRent.Modules.BusinessModule.Application.Services;
 using AlbCarRent.Modules.BusinessModule.Domain;
@@ -44,6 +48,8 @@ builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICarRepository,CarRepository>();
 builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<IBookingService,BookingService>();
+builder.Services.AddScoped<IBookingRepository,BookingRepository>();
 
 //Configure EF COre with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
