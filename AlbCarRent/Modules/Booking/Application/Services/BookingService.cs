@@ -16,5 +16,10 @@ namespace AlbCarRent.Modules.Booking.Application.Services
         {
             return await _bookingRepository.AddBooking(addBookingRequest);
         }
+
+        public async Task<GetBookingsResponse> GetBookingsByBizId(string bizId, string status)
+        {
+            return await _bookingRepository.GetBookingsByBizId(bizId, status);
+        }
     }
 }

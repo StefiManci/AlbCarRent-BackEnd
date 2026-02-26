@@ -55,6 +55,7 @@ namespace AlbCarRent.Modules.Booking.Infrastructure
                     AdditionalNotes = request.AdditionalNotes,
                     Status = "PENDING",
                     CarId = request.CarId,
+                    CarOwner = request.CarOwner,
                 };
 
                 _context.Bookings.Add(booking);
@@ -73,6 +74,38 @@ namespace AlbCarRent.Modules.Booking.Infrastructure
                 {
                     Success = false,
                     Message = "An unexpected error occurred. Try again later!"
+                };
+            }
+        }
+
+        public async Task<GetBookingsResponse> GetBookingsByBizId(string bizId,string status)
+        {
+            try
+            {
+                var bookings = await _context.Bookings.Where(b=>b.CarOwner == bizId && b.Status == status).ToListAsync();
+
+                if (bookings.Any())
+                {
+                    return new GetBookingsResponse
+                    {
+                        Success = true,
+                        Message = "Bookings returned successfully!",
+                        Bookings = bookings
+                    };
+                }
+
+                return new GetBookingsResponse
+                {
+                    Success = false,
+                    Message = "You dont have any bookings with this status!",
+                };
+            }
+            catch(Exception ex) {
+
+                return new GetBookingsResponse
+                {
+                    Success = false,
+                    Message = "An unexpected error has occurred!"
                 };
             }
         }

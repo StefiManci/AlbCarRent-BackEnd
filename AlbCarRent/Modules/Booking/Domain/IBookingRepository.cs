@@ -5,5 +5,7 @@ namespace AlbCarRent.Modules.Booking.Domain
     public interface IBookingRepository
     {
         Task<AddBookingResponse> AddBooking(AddBookingRequest addBookingRequest);
+
+        Task<GetBookingsResponse> GetBookingsByBizId(string bizId,string status);
     }
 }

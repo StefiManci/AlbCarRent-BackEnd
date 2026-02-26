@@ -24,5 +24,7 @@ namespace AlbCarRent.Modules.Booking.DTOs
         public string Status { get; set; }
 
         public int CarId { get; set; }
+
+        public string CarOwner { get; set; }
     }
 }
