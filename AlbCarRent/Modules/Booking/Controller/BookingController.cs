@@ -56,7 +56,7 @@ namespace AlbCarRent.Modules.Booking.Controller
         }
 
         [HttpPost("change-status")]
-        public async Task<IActionResult> ChangeBookingStatus(string status,int bookingId)
+        public async Task<IActionResult> ChangeBookingStatus([FromBody]ChangeBookingStatusRequest request)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace AlbCarRent.Modules.Booking.Controller
                     return BadRequest("Invalid data was send to the server");
                 }
 
-                return Ok(await _bookingService.ChangeBookingStatus(bookingId, status));
+                return Ok(await _bookingService.ChangeBookingStatus(request.BookingId, request.Status));
 
             }catch(Exception e)
             {
