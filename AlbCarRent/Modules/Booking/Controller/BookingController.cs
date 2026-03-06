@@ -54,5 +54,23 @@ namespace AlbCarRent.Modules.Booking.Controller
                 return StatusCode(500, "An unexpected error has occured.Try again later!");
             }
         }
+
+        [HttpPost("change-status")]
+        public async Task<IActionResult> ChangeBookingStatus(string status,int bookingId)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest("Invalid data was send to the server");
+                }
+
+                return Ok(await _bookingService.ChangeBookingStatus(bookingId, status));
+
+            }catch(Exception e)
+            {
+                return StatusCode(500, "Internal server error!");
+            }
+        }
     }
 }

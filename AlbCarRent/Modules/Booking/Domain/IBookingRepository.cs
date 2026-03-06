@@ -7,5 +7,7 @@ namespace AlbCarRent.Modules.Booking.Domain
         Task<AddBookingResponse> AddBooking(AddBookingRequest addBookingRequest);
 
         Task<GetBookingsResponse> GetBookingsByBizId(string bizId,string status);
+
+        Task<ChangeBookingStatusResponse> ChangeBookingStatus(int bookingId,string status);
     }
 }

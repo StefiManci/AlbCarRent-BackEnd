@@ -78,6 +78,64 @@ namespace AlbCarRent.Modules.Booking.Infrastructure
             }
         }
 
+        public async Task<ChangeBookingStatusResponse> ChangeBookingStatus(int bookingId, string status)
+        {
+            try
+            {
+               var booking = await _context.Bookings.FirstOrDefaultAsync(b=>b.Id == bookingId);
+
+               if(booking == null)
+               {
+                    return new ChangeBookingStatusResponse
+                    {
+                        Success = false,
+                        Message = "This booking doesn`t exists!"
+                    };
+               }
+
+               booking.Status = status;
+          
+
+               var car = await _context.Cars.FirstOrDefaultAsync(c => c.Id == booking.CarId);
+
+               if(car == null)
+                {
+                    return new ChangeBookingStatusResponse
+                    {
+                        Success = false,
+                        Message = "You cannot book this car because it is no longer available for booking!"
+                    };
+                }
+                
+                if(status == "ACCEPTED")
+                {
+                    car.IsAvailable = false;
+                }
+                else
+                {
+                    car.IsAvailable = true;
+                }
+
+                await _context.SaveChangesAsync();
+
+                //TODO - > Send email to customer
+
+                return new ChangeBookingStatusResponse
+                {
+                    Success = true,
+                    Message = "Booking status was changed!"
+                };
+
+            }catch(Exception ex)
+            {
+                return new ChangeBookingStatusResponse
+                {
+                    Success = false,
+                    Message = "An unexpected error has occurred.Please try again later!"
+                };
+            }
+        }
+
         public async Task<GetBookingsResponse> GetBookingsByBizId(string bizId,string status)
         {
             try
